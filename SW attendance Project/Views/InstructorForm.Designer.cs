@@ -158,6 +158,7 @@
             this.btnStartLecture.Size = new System.Drawing.Size(23, 38);
             this.btnStartLecture.Tag = "0";
             this.btnStartLecture.Text = "Start lecture";
+            this.btnStartLecture.Click += new System.EventHandler(this.btnStartLecture_Click);
             // 
             // btnViewLectures
             // 

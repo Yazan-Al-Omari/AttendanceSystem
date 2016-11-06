@@ -62,25 +62,12 @@ namespace SW_attendance_Project.Views
                 case "btnLogout":
                    logout();
                      break;
-                case "btnStartLecture":
-                     startLecture();
-                     break;
-
                 case "btnBack":
                      Mode = FormMode.ViewCourses;
                      break;
             }
         }
 
-        private void startLecture()
-        {
-            if (lstCourses.SelectedItems.Count != 1)
-            {
-                MessageBox.Show("Please Select a Course!");
-                return;
-            }
-
-        }
 
         private void logout()
         {
@@ -144,12 +131,14 @@ namespace SW_attendance_Project.Views
             lstLectures.Items.Clear();
             foreach(var lecture in _selectedCourse.Lectures)
             {
-                lstLectures.Items.Add(new ListViewItem(new string[] {
+                var item = new ListViewItem(new string[] {
                     lecture.Id.ToString(), 
                     lecture.StartTime.ToString(), 
                     lecture.StudentsAttended.Count().ToString(),
                     lecture.StudentsApsent.Count().ToString()
-                }));
+                });
+                item.Tag = lecture;
+                lstLectures.Items.Add(item);
             }
             btnBack.Enabled = true;
             lblTitle.Text = "Lectures Of Course " + _selectedCourse.Name;
@@ -183,7 +172,10 @@ namespace SW_attendance_Project.Views
 
         private void lstLectures_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            if (lstLectures.SelectedItems.Count != 1) return;
+            var casted = (Lecture)lstLectures.SelectedItems[0].Tag;
+            var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, casted);
+            viewLectureForm.ShowDialog();
         }
 
         private void lstCourses_SelectedIndexChanged(object sender, EventArgs e)
@@ -191,6 +183,13 @@ namespace SW_attendance_Project.Views
             btnStartLecture.Enabled = lstCourses.SelectedItems.Count == 1;
             btnViewLectures.Enabled = lstCourses.SelectedItems.Count == 1;
             btnDeleteCourse.Enabled = lstCourses.SelectedItems.Count == 1;
+
+            if (lstCourses.SelectedItems.Count != 1)
+            {
+                _selectedCourse = null;
+                return;
+            }
+            _selectedCourse = (Course)lstCourses.SelectedItems[0].Tag;
         }
 
         private void lstCourses_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -200,8 +199,19 @@ namespace SW_attendance_Project.Views
                 _selectedCourse = null;
                 return;
             }
-            _selectedCourse = (Course)lstCourses.SelectedItems[0].Tag;
             Mode = FormMode.ViewLectures;
+        }
+
+        private void btnStartLecture_Click(object sender, EventArgs e)
+        {
+            if (lstCourses.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Please Select a Course!");
+                return;
+            }
+           var newLecture =  _coursesService.StartLecture(_selectedCourse.Id);
+           var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, newLecture);
+           viewLectureForm.ShowDialog();
         }
     }
 }

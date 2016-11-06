@@ -20,5 +20,7 @@ namespace SW_attendance_Project.Core
 
        IQueryable<Course> GetCoursesForStudent(int studentId);
 
+       Lecture StartLecture(int courseId);
+
     }
 }

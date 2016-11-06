@@ -14,7 +14,7 @@ namespace SW_attendance_Project.Entities
 
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<Lecture> Lectures { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

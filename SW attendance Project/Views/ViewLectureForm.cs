@@ -32,6 +32,8 @@ namespace SW_attendance_Project.Views
 
             _selectedLecture = selectedLecture;
             lblTitle.Text = "Lecture: " + selectedLecture.Course.Name + " | " + selectedLecture.StartTime.ToShortDateString();
+            
+            refreshData();
         }
 
         void _timer_Tick(object sender, EventArgs e)
@@ -41,9 +43,9 @@ namespace SW_attendance_Project.Views
 
         void refreshData()
         {
+            lstAttended.Items.Clear();
             foreach (var attendance in _selectedLecture.Attendances)
             {
-                lstAttended.Items.Clear();
                 lstAttended.Items.Add(new ListViewItem(new string[] {
                     attendance.Student.Id.ToString(),
                     attendance.Student.Number,
@@ -52,10 +54,10 @@ namespace SW_attendance_Project.Views
                 }));
             }
 
+            lstApsent.Items.Clear();
             foreach (var student in _selectedLecture.StudentsApsent)
             {
-                lstAttended.Items.Clear();
-                lstAttended.Items.Add(new ListViewItem(new string[] {
+                lstApsent.Items.Add(new ListViewItem(new string[] {
                     student.Id.ToString(),
                     student.Number,
                     student.Name
