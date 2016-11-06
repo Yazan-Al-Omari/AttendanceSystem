@@ -62,6 +62,7 @@ namespace SW_attendance_Project.Services
 
         public void Logout()
         {
+            //We need to Implemnt this correclty 
             _user = null;
         }
     }
