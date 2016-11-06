@@ -59,7 +59,8 @@
             this.txtUsername.Location = new System.Drawing.Point(139, 46);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(187, 20);
-            this.txtUsername.TabIndex = 1;
+            this.txtUsername.TabIndex = 0;
+            this.txtUsername.Text = "i0@live.com";
             // 
             // txtPassword
             // 
@@ -67,6 +68,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(187, 20);
             this.txtPassword.TabIndex = 1;
+            this.txtPassword.Text = "123456";
             // 
             // btnLogin
             // 

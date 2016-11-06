@@ -17,15 +17,38 @@ namespace SW_attendance_Project.Views
         private IUsersService _usersServcie;
         private ICoursesService _coursesService;
         private LoginForm _loginForm;
+
+        private Course _selectedCourse;
+
         public InstructorForm(IUsersService usersServcie, ICoursesService coursesService, LoginForm loginForm)
         {
             InitializeComponent();
             _usersServcie = usersServcie;
             _coursesService = coursesService;
             _loginForm = loginForm;
+
+            Mode = FormMode.ViewCourses;
+
             checkUser();
             refreshForm();
         }
+
+
+        private FormMode _mode;
+
+        public FormMode Mode
+        {
+            set
+            {
+                _mode = value;
+                refreshForm();
+            }
+            get
+            {
+                return _mode;
+            }
+        }
+
 
         private void InstructorForm_Load(object sender, EventArgs e)
         {
@@ -37,11 +60,34 @@ namespace SW_attendance_Project.Views
             switch (e.ClickedItem.Name)
             {
                 case "btnLogout":
-                    _usersServcie.Logout();
-                    _loginForm.Show();
-                    this.Hide();
-                    break;
+                   logout();
+                     break;
+                case "btnStartLecture":
+                     startLecture();
+                     break;
+
+                case "btnBack":
+                     Mode = FormMode.ViewCourses;
+                     break;
             }
+        }
+
+        private void startLecture()
+        {
+            if (lstCourses.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Please Select a Course!");
+                return;
+            }
+
+        }
+
+        private void logout()
+        {
+            _usersServcie.Logout();
+            _loginForm.Show();
+            this.Hide();
+           
         }
 
         private void checkUser()
@@ -58,9 +104,109 @@ namespace SW_attendance_Project.Views
 
         }
 
-        private void refreshForm(){
+        private void refreshForm()
+        {
             var currentInstrutor = _usersServcie.GetLoggedInUser();
             lblCurrentUser.Text = "Welcome, " + currentInstrutor.Name;
+
+            activateStrip();
+
+            switch (_mode)
+            {
+                default:
+                case FormMode.ViewCourses: loadCoursesMode(); break;
+                case FormMode.ViewLectures: loadLecturesMode(); break;
+            }
+           
+        }
+
+        void activateStrip()
+        {
+            btnBack.Enabled = false;
+            foreach (var item in toolStrip1.Items)
+            {
+                if (item is ToolStripItem)
+                {
+                    var casted = ((ToolStripItem)item);
+
+                    if (casted.Tag != null && casted.Tag.ToString() == "0") casted.Visible = (Mode == FormMode.ViewCourses);
+                    else if (casted.Tag != null && casted.Tag.ToString() == "1") casted.Visible = (Mode == FormMode.ViewLectures);
+                }
+
+            }
+            lstCourses.Visible = Mode == FormMode.ViewCourses;
+            lstLectures.Visible = Mode == FormMode.ViewLectures;
+        }
+
+        private void loadLecturesMode()
+        {
+            var currentInstrutor = _usersServcie.GetLoggedInUser();
+            lstLectures.Items.Clear();
+            foreach(var lecture in _selectedCourse.Lectures)
+            {
+                lstLectures.Items.Add(new ListViewItem(new string[] {
+                    lecture.Id.ToString(), 
+                    lecture.StartTime.ToString(), 
+                    lecture.StudentsAttended.Count().ToString(),
+                    lecture.StudentsApsent.Count().ToString()
+                }));
+            }
+            btnBack.Enabled = true;
+            lblTitle.Text = "Lectures Of Course " + _selectedCourse.Name;
+        }
+
+        private void loadCoursesMode()
+        {
+            var currentInstrutor = _usersServcie.GetLoggedInUser();
+            lstCourses.Items.Clear();
+            foreach (var course in _coursesService.GetCoursesForInstructor(currentInstrutor.Id).OrderBy(x => x.TimeInDay))
+            {
+                var item = new ListViewItem(new string[] {
+                    course.Id.ToString(), 
+                    course.Name, 
+                    course.TimeInDay.ToString(),
+                    course.Duration.ToString(),
+                    course.StartDate.ToShortDateString(),
+                    course.EndDate.ToShortDateString(),
+                    course.Location,
+                    course.Students.Count.ToString()
+                });
+                item.Tag = course;
+                lstCourses.Items.Add(item);
+            }
+        }
+
+        private void lstLectures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstLectures_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void lstCourses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnStartLecture.Enabled = lstCourses.SelectedItems.Count == 1;
+            btnViewLectures.Enabled = lstCourses.SelectedItems.Count == 1;
+            btnDeleteCourse.Enabled = lstCourses.SelectedItems.Count == 1;
+        }
+
+        private void lstCourses_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lstCourses.SelectedItems.Count != 1)
+            {
+                _selectedCourse = null;
+                return;
+            }
+            _selectedCourse = (Course)lstCourses.SelectedItems[0].Tag;
+            Mode = FormMode.ViewLectures;
         }
     }
+}
+
+public enum FormMode : byte {
+    ViewCourses,
+    ViewLectures
 }
