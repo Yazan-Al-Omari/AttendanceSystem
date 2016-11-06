@@ -17,7 +17,7 @@ namespace SW_attendance_Project.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         public int CourseId { get; set; }
 

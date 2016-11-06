@@ -151,6 +151,7 @@
             this.chkAuto.TabIndex = 3;
             this.chkAuto.Text = "Auto Refresh";
             this.chkAuto.UseVisualStyleBackColor = true;
+            this.chkAuto.CheckedChanged += new System.EventHandler(this.chkAuto_CheckedChanged);
             // 
             // linkLabel1
             // 
@@ -161,6 +162,7 @@
             this.linkLabel1.TabIndex = 4;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Refresh";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // lblTitle
             // 

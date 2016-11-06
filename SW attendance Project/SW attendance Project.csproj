@@ -121,6 +121,10 @@
     <Compile Include="Migrations\201611061708535_CoursesForStudents.Designer.cs">
       <DependentUpon>201611061708535_CoursesForStudents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611062008091_FixTimeInLecture.cs" />
+    <Compile Include="Migrations\201611062008091_FixTimeInLecture.Designer.cs">
+      <DependentUpon>201611062008091_FixTimeInLecture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611061708535_CoursesForStudents.resx">
       <DependentUpon>201611061708535_CoursesForStudents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611062008091_FixTimeInLecture.resx">
+      <DependentUpon>201611062008091_FixTimeInLecture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
