@@ -32,7 +32,7 @@ namespace SW_attendance_Project.Services
 
         public User Login(string username, string password)
         {
-            Logout();
+            Logout(); // Logout Firstly
             _user = _db.Users.OfType<Instructor>().SingleOrDefault(x => x.Password == password && x.Email == username);
             if (_user == null)
             {
