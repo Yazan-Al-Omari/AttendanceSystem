@@ -22,5 +22,9 @@ namespace SW_attendance_Project.Core
 
        Lecture StartLecture(int courseId);
 
+       Lecture GetActiveLectureForStudent(int studentId);
+
+
+       Attendance RegisterAttendance(int studentId, int lectureId);
     }
 }

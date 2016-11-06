@@ -15,6 +15,8 @@ namespace SW_attendance_Project.Entities
             Students = new HashSet<Student>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

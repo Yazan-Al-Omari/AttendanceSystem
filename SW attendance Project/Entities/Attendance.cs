@@ -18,7 +18,7 @@ namespace SW_attendance_Project.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int LectureId { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public DateTime Time { get; set; }
 
         public virtual Student Student { get; set; }
 

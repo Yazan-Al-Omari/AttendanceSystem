@@ -30,7 +30,7 @@ namespace SW_attendance_Project.Views
            {
                if (user is Student)
                {
-                   var studentForm = new StudentForm(_usersService);
+                   var studentForm = new StudentForm(_usersService, _coursesService);
                    studentForm.Show();
                    
                }

@@ -213,6 +213,8 @@ namespace SW_attendance_Project.Views
            var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, newLecture);
            viewLectureForm.ShowDialog();
         }
+
+       
     }
 }
 

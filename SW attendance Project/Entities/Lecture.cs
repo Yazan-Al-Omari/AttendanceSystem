@@ -14,7 +14,8 @@ namespace SW_attendance_Project.Entities
             Attendances = new HashSet<Attendance>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime StartTime { get; set; }
