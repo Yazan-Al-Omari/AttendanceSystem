@@ -11,6 +11,7 @@ namespace SW_attendance_Project.Entities
         public Student()
         {
             Attendances = new HashSet<Attendance>();
+            Courses = new HashSet<Course>();
         }
 
 
@@ -19,5 +20,7 @@ namespace SW_attendance_Project.Entities
         public string Number { get; set; }
 
         public virtual ICollection<Attendance> Attendances { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

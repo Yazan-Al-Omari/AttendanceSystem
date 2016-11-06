@@ -12,6 +12,7 @@ namespace SW_attendance_Project.Entities
         public Course()
         {
             Lectures = new HashSet<Lecture>();
+            Students = new HashSet<Student>();
         }
 
         public int Id { get; set; }
@@ -39,6 +40,8 @@ namespace SW_attendance_Project.Entities
         public virtual Instructor Instructor { get; set; }
 
         public virtual ICollection<Lecture> Lectures { get; set; }
+
+        public virtual ICollection<Student> Students { get; set; }
 
        
     }

@@ -16,18 +16,18 @@ namespace SW_attendance_Project.Services
 
         private static IUsersService _instance;
 
-        public static IUsersService GetInstance(SystemContext db)
+        public static IUsersService GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new UsersService(db);
+                _instance = new UsersService(new SystemContextFactory());
             }
             return _instance;
         }
 
-        private UsersService(SystemContext db)
+        private UsersService(SystemContextFactory factory)
         {
-            _db = db;
+            _db = factory.GetNewSystemContext();
         }
 
         public User Login(string username, string password)

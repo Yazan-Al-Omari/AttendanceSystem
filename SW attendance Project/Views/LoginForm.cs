@@ -15,10 +15,12 @@ namespace SW_attendance_Project.Views
     public partial class LoginForm : Form
     {
         private IUsersService _usersService;
-        public LoginForm(IUsersService usersService)
-        {    
+        private ICoursesService _coursesService;
+        public LoginForm(IUsersService usersService, ICoursesService coursesService)
+        {
             InitializeComponent();
             _usersService = usersService;
+            _coursesService = coursesService;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace SW_attendance_Project.Views
                }
                else if(user is Instructor)
                {
-                   var instructorForm = new InstructorForm(_usersService);
+                   var instructorForm = new InstructorForm(_usersService, _coursesService, this);
                    instructorForm.Show();
                }
                lblErrorMessage.Visible = false;

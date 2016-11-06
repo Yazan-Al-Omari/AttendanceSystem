@@ -31,5 +31,6 @@ namespace SW_attendance_Project.Entities
     {
         Student = 0,
         Instructor = 1,
+        None = 2,
     }
 }

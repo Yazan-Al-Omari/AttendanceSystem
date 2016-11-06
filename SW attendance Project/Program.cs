@@ -19,12 +19,11 @@ namespace SW_attendance_Project
         static void Main()
         {
 
-            SystemContext db = new SystemContext();
-            IUsersService usersService = UsersService.GetInstance(db); 
+            IUsersService usersService = UsersService.GetInstance(); 
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm(usersService));
+            Application.Run(new LoginForm(usersService, new CoursesService()));
             
         }
     }
