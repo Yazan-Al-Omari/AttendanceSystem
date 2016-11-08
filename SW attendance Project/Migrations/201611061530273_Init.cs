@@ -25,7 +25,7 @@ namespace SW_attendance_Project.Migrations
                 "dbo.Lectures",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         StartTime = c.Time(nullable: false, precision: 7),
                         CourseId = c.Int(nullable: false),
                     })

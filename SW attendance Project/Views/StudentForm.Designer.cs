@@ -32,13 +32,13 @@
             this.grpCheckin = new System.Windows.Forms.GroupBox();
             this.lblCheckin = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblApsent = new System.Windows.Forms.Label();
+            this.lstApsent = new System.Windows.Forms.ListBox();
             this.lstCourses = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lstApsent = new System.Windows.Forms.ListBox();
-            this.lblApsent = new System.Windows.Forms.Label();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpCheckin.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -57,9 +57,9 @@
             // 
             this.grpCheckin.Controls.Add(this.lblCheckin);
             this.grpCheckin.Controls.Add(this.btnCheckin);
-            this.grpCheckin.Location = new System.Drawing.Point(12, 284);
+            this.grpCheckin.Location = new System.Drawing.Point(12, 278);
             this.grpCheckin.Name = "grpCheckin";
-            this.grpCheckin.Size = new System.Drawing.Size(550, 113);
+            this.grpCheckin.Size = new System.Drawing.Size(550, 119);
             this.grpCheckin.TabIndex = 1;
             this.grpCheckin.TabStop = false;
             this.grpCheckin.Text = "Active Lecture";
@@ -84,6 +84,23 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Courses";
+            // 
+            // lblApsent
+            // 
+            this.lblApsent.AutoSize = true;
+            this.lblApsent.Location = new System.Drawing.Point(354, 32);
+            this.lblApsent.Name = "lblApsent";
+            this.lblApsent.Size = new System.Drawing.Size(148, 13);
+            this.lblApsent.TabIndex = 2;
+            this.lblApsent.Text = "Selected Course Apsent Days";
+            // 
+            // lstApsent
+            // 
+            this.lstApsent.FormattingEnabled = true;
+            this.lstApsent.Location = new System.Drawing.Point(357, 48);
+            this.lstApsent.Name = "lstApsent";
+            this.lstApsent.Size = new System.Drawing.Size(187, 212);
+            this.lstApsent.TabIndex = 1;
             // 
             // lstCourses
             // 
@@ -112,31 +129,14 @@
             this.columnHeader2.Text = "Course";
             this.columnHeader2.Width = 118;
             // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Apsents";
-            // 
-            // lstApsent
-            // 
-            this.lstApsent.FormattingEnabled = true;
-            this.lstApsent.Location = new System.Drawing.Point(357, 48);
-            this.lstApsent.Name = "lstApsent";
-            this.lstApsent.Size = new System.Drawing.Size(187, 212);
-            this.lstApsent.TabIndex = 1;
-            // 
-            // lblApsent
-            // 
-            this.lblApsent.AutoSize = true;
-            this.lblApsent.Location = new System.Drawing.Point(354, 32);
-            this.lblApsent.Name = "lblApsent";
-            this.lblApsent.Size = new System.Drawing.Size(148, 13);
-            this.lblApsent.TabIndex = 2;
-            this.lblApsent.Text = "Selected Course Apsent Days";
-            // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Instructor";
             this.columnHeader4.Width = 131;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Apsents";
             // 
             // StudentForm
             // 
@@ -147,6 +147,7 @@
             this.Controls.Add(this.grpCheckin);
             this.Name = "StudentForm";
             this.Text = "StudentForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentForm_FormClosing);
             this.Load += new System.EventHandler(this.StudentForm_Load);
             this.grpCheckin.ResumeLayout(false);
             this.grpCheckin.PerformLayout();

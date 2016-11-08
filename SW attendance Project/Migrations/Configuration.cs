@@ -21,6 +21,10 @@ namespace SW_attendance_Project.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
+
+            if (context.Users.Any()) return;
+
+
             var r = new Random();
             for (int i = 0; i < 30; i++)
             {
@@ -35,7 +39,7 @@ namespace SW_attendance_Project.Migrations
                 {
                     var c = new Course()
                     {
-                        Name = "Course 1_" + i,
+                        Name = "Course " + i +  "_" + j,
                         Duration = 60,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddMonths(4),
@@ -44,7 +48,7 @@ namespace SW_attendance_Project.Migrations
                         TimeInDay = r.Next(0, 9) + 7
 
                     };
-                    var stds = context.Users.OfType<Student>().Distinct().Take(10);
+                    var stds = context.Users.OfType<Student>().ToList().OrderBy(x=> r.Next()).Take(10);
                     foreach (var s in stds)
                     {
                         c.Students.Add(s);

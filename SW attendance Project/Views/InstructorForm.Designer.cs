@@ -114,7 +114,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(735, 41);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // btnBack
             // 
@@ -125,6 +124,7 @@
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(23, 38);
             this.btnBack.Text = "Back";
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // toolStripSeparator3
             // 
@@ -140,6 +140,7 @@
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(23, 38);
             this.btnLogout.Text = "Logout";
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblCurrentUser
             // 
@@ -281,7 +282,7 @@
             this.Controls.Add(this.lstLectures);
             this.Name = "InstructorForm";
             this.Text = "Instructor Courses";
-            this.Load += new System.EventHandler(this.InstructorForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InstructorForm_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

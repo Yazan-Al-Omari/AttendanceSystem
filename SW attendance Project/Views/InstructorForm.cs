@@ -50,22 +50,10 @@ namespace SW_attendance_Project.Views
         }
 
 
-        private void InstructorForm_Load(object sender, EventArgs e)
-        {
 
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void InstructorForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            switch (e.ClickedItem.Name)
-            {
-                case "btnLogout":
-                   logout();
-                     break;
-                case "btnBack":
-                     Mode = FormMode.ViewCourses;
-                     break;
-            }
+            logout();
         }
 
 
@@ -212,6 +200,16 @@ namespace SW_attendance_Project.Views
            var newLecture =  _coursesService.StartLecture(_selectedCourse.Id);
            var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, newLecture);
            viewLectureForm.ShowDialog();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            logout();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Mode = FormMode.ViewCourses;
         }
 
        

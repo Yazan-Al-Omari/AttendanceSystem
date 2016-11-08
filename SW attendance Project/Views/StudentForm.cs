@@ -14,22 +14,26 @@ namespace SW_attendance_Project.Views
 {
     public partial class StudentForm : Form
     {
-
         private IUsersService _usersServcie;
         private ICoursesService _coursesService;
+        private LoginForm _loginForm;
 
-        public StudentForm(IUsersService usersServcie, ICoursesService coursesService)
+
+        public StudentForm(IUsersService usersServcie, ICoursesService coursesService, LoginForm loginForm)
         {
             InitializeComponent();
             _usersServcie = usersServcie;
             _coursesService = coursesService;
+            _loginForm = loginForm;
+        
             refreshForm();
         }
-
+    
+     
         private void refreshForm()
         {
             lstCourses.Items.Clear();
-            var student = (Student) _usersServcie.GetLoggedInUser();
+            var student = (Student)(_usersServcie.GetUserById(_usersServcie.GetLoggedInUser().Id));
             foreach (var course in _coursesService.GetCoursesForStudent(student.Id))
             {
                 var item = new ListViewItem(new string[] {
@@ -42,14 +46,15 @@ namespace SW_attendance_Project.Views
                 lstCourses.Items.Add(item);
             }
             var activeLecture = _coursesService.GetActiveLectureForStudent(student.Id);
-            if (activeLecture != null)
+           if (activeLecture != null)
             {
-                grpCheckin.Visible = true;
+                btnCheckin.Enabled = true;
                 lblCheckin.Text = "Lecture: " + activeLecture.Course.Name + " is currantly being held!";
             }
             else
             {
-                grpCheckin.Visible = false;
+                btnCheckin.Enabled = false; ;
+                lblCheckin.Text = "No Active Lectures At The Moment!";
             }
             
             
@@ -74,6 +79,19 @@ namespace SW_attendance_Project.Views
             }
         }
 
+
+        private void StudentForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        {
+            logout();
+        }
+
+
+        private void logout()
+        {
+            _usersServcie.Logout();
+            _loginForm.Show();
+            this.Hide();
+        }
         private void btnCheckin_Click(object sender, EventArgs e)
         {
             var student = (Student)_usersServcie.GetLoggedInUser();
@@ -87,8 +105,6 @@ namespace SW_attendance_Project.Views
 
         }
 
-        
-
-
+    
     }
 }
