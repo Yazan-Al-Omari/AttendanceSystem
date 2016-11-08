@@ -26,5 +26,7 @@ namespace SW_attendance_Project.Core
 
 
        Attendance RegisterAttendance(int studentId, int lectureId);
+
+       Lecture GetLectureById(int id);
     }
 }

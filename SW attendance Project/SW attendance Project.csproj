@@ -68,7 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IAuthenticationManager.cs" />
     <Compile Include="Core\ICoursesService.cs" />
+    <Compile Include="Core\IServiceLocator.cs" />
     <Compile Include="Core\IUsersService.cs" />
     <Compile Include="Entities\Attendance.cs" />
     <Compile Include="Entities\Course.cs" />
@@ -100,7 +102,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthenticationManager.cs" />
     <Compile Include="Services\CoursesService.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\SystemContextFactory.cs" />
     <Compile Include="Services\UsersService.cs" />
     <Compile Include="Views\InstructorForm.cs">

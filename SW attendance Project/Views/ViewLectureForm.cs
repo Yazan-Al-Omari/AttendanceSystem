@@ -14,16 +14,22 @@ namespace SW_attendance_Project.Views
 {
     public partial class ViewLectureForm : Form
     {
-        private IUsersService _usersServcie;
+
+
+          
+        private IServiceLocator _serviceLocator;
         private ICoursesService _coursesService;
+
 
         private Timer _timer;
 
         private Lecture _selectedLecture;
 
-        public ViewLectureForm(IUsersService usersServcie, ICoursesService coursesService, Lecture selectedLecture)
+        public ViewLectureForm(IServiceLocator serviceLocator,  Lecture selectedLecture)
         {
             InitializeComponent();
+            _coursesService = serviceLocator.GetCoursesService();
+            _serviceLocator = serviceLocator;
 
             _timer = new Timer();
             _timer.Enabled = false;
@@ -32,7 +38,7 @@ namespace SW_attendance_Project.Views
 
             _selectedLecture = selectedLecture;
             lblTitle.Text = "Lecture: " + selectedLecture.Course.Name + " | " + selectedLecture.StartTime.ToShortDateString();
-            
+
             refreshData();
         }
 
@@ -43,8 +49,10 @@ namespace SW_attendance_Project.Views
 
         void refreshData()
         {
+            _coursesService = _serviceLocator.GetCoursesService();
+            Lecture lec = _coursesService.GetLectureById(_selectedLecture.Id);
             lstAttended.Items.Clear();
-            foreach (var attendance in _selectedLecture.Attendances)
+            foreach (var attendance in lec.Attendances)
             {
                 lstAttended.Items.Add(new ListViewItem(new string[] {
                     attendance.Student.Id.ToString(),
@@ -55,7 +63,7 @@ namespace SW_attendance_Project.Views
             }
 
             lstApsent.Items.Clear();
-            foreach (var student in _selectedLecture.StudentsApsent)
+            foreach (var student in lec.StudentsApsent)
             {
                 lstApsent.Items.Add(new ListViewItem(new string[] {
                     student.Id.ToString(),

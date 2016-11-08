@@ -1,5 +1,6 @@
 ﻿using SW_attendance_Project.Core;
 using SW_attendance_Project.Entities;
+using SW_attendance_Project.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,29 +15,36 @@ namespace SW_attendance_Project.Views
 {
     public partial class LoginForm : Form
     {
+
+        private IServiceLocator _serviceLocator;
         private IUsersService _usersService;
+        private IAuthenticationManager _authManager;
         private ICoursesService _coursesService;
-        public LoginForm(IUsersService usersService, ICoursesService coursesService)
+
+        public LoginForm(IServiceLocator serviceLocator)
         {
             InitializeComponent();
-            _usersService = usersService;
-            _coursesService = coursesService;
+            _usersService = serviceLocator.GetUsersService();
+            _coursesService = serviceLocator.GetCoursesService();
+            _authManager = serviceLocator.GetAuthenticationManager();
+
+            _serviceLocator = serviceLocator;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-           var user =  _usersService.Login(txtUsername.Text, txtPassword.Text);
-           if (_usersService.IsAuthenticated())
+            var user = _authManager.Login(txtUsername.Text, txtPassword.Text);
+            if (_authManager.IsAuthenticated())
            {
                if (user is Student)
                {
-                   var studentForm = new StudentForm(_usersService, _coursesService, this);
+                   var studentForm = new StudentForm(_serviceLocator, this);
                    studentForm.Show();
                    
                }
                else if(user is Instructor)
                {
-                   var instructorForm = new InstructorForm(_usersService, _coursesService, this);
+                   var instructorForm = new InstructorForm(_serviceLocator, this);
                    instructorForm.Show();
                }
                lblErrorMessage.Visible = false;

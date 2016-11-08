@@ -1,5 +1,6 @@
 ﻿using SW_attendance_Project.Core;
 using SW_attendance_Project.Entities;
+using SW_attendance_Project.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,17 +15,24 @@ namespace SW_attendance_Project.Views
 {
     public partial class InstructorForm : Form
     {
-        private IUsersService _usersServcie;
+
+        
+        private IServiceLocator _serviceLocator;
+        private IUsersService _usersService;
+        private IAuthenticationManager _authManager;
         private ICoursesService _coursesService;
+  
         private LoginForm _loginForm;
 
         private Course _selectedCourse;
 
-        public InstructorForm(IUsersService usersServcie, ICoursesService coursesService, LoginForm loginForm)
+        public InstructorForm(IServiceLocator serviceLocator, LoginForm loginForm)
         {
             InitializeComponent();
-            _usersServcie = usersServcie;
-            _coursesService = coursesService;
+            _usersService = serviceLocator.GetUsersService();
+            _coursesService = serviceLocator.GetCoursesService();
+            _authManager = serviceLocator.GetAuthenticationManager();
+            _serviceLocator = serviceLocator;
             _loginForm = loginForm;
 
             Mode = FormMode.ViewCourses;
@@ -59,7 +67,7 @@ namespace SW_attendance_Project.Views
 
         private void logout()
         {
-            _usersServcie.Logout();
+            _authManager.Logout();
             _loginForm.Show();
             this.Hide();
            
@@ -67,8 +75,8 @@ namespace SW_attendance_Project.Views
 
         private void checkUser()
         {
-            var currentInstrutor = _usersServcie.GetLoggedInUser();
-            if (_usersServcie.IsAuthenticated() && currentInstrutor is Instructor)
+            var currentInstrutor = _authManager.GetLoggedInUser();
+            if (_authManager.IsAuthenticated() && currentInstrutor is Instructor)
             {
                 _coursesService.GetCoursesForInstructor(currentInstrutor.Id);
             }
@@ -81,7 +89,7 @@ namespace SW_attendance_Project.Views
 
         private void refreshForm()
         {
-            var currentInstrutor = _usersServcie.GetLoggedInUser();
+            var currentInstrutor = _authManager.GetLoggedInUser();
             lblCurrentUser.Text = "Welcome, " + currentInstrutor.Name;
 
             activateStrip();
@@ -111,11 +119,11 @@ namespace SW_attendance_Project.Views
             }
             lstCourses.Visible = Mode == FormMode.ViewCourses;
             lstLectures.Visible = Mode == FormMode.ViewLectures;
+            lblTitle.Text = "Courses List";
         }
 
         private void loadLecturesMode()
         {
-            var currentInstrutor = _usersServcie.GetLoggedInUser();
             lstLectures.Items.Clear();
             foreach(var lecture in _selectedCourse.Lectures)
             {
@@ -134,7 +142,7 @@ namespace SW_attendance_Project.Views
 
         private void loadCoursesMode()
         {
-            var currentInstrutor = _usersServcie.GetLoggedInUser();
+            var currentInstrutor = _authManager.GetLoggedInUser();
             lstCourses.Items.Clear();
             foreach (var course in _coursesService.GetCoursesForInstructor(currentInstrutor.Id).OrderBy(x => x.TimeInDay))
             {
@@ -162,7 +170,7 @@ namespace SW_attendance_Project.Views
         {
             if (lstLectures.SelectedItems.Count != 1) return;
             var casted = (Lecture)lstLectures.SelectedItems[0].Tag;
-            var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, casted);
+            var viewLectureForm = new ViewLectureForm(_serviceLocator, casted);
             viewLectureForm.ShowDialog();
         }
 
@@ -198,7 +206,7 @@ namespace SW_attendance_Project.Views
                 return;
             }
            var newLecture =  _coursesService.StartLecture(_selectedCourse.Id);
-           var viewLectureForm = new ViewLectureForm(_usersServcie, _coursesService, newLecture);
+           var viewLectureForm = new ViewLectureForm(_serviceLocator, newLecture);
            viewLectureForm.ShowDialog();
         }
 
@@ -210,6 +218,11 @@ namespace SW_attendance_Project.Views
         private void btnBack_Click(object sender, EventArgs e)
         {
             Mode = FormMode.ViewCourses;
+        }
+
+        private void InstructorForm_Load(object sender, EventArgs e)
+        {
+
         }
 
        

@@ -283,6 +283,7 @@
             this.Name = "InstructorForm";
             this.Text = "Instructor Courses";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InstructorForm_FormClosing);
+            this.Load += new System.EventHandler(this.InstructorForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

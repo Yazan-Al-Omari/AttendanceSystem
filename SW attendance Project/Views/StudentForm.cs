@@ -14,16 +14,21 @@ namespace SW_attendance_Project.Views
 {
     public partial class StudentForm : Form
     {
-        private IUsersService _usersServcie;
+        private IServiceLocator _serviceLocator;
+        private IUsersService _usersService;
+        private IAuthenticationManager _authManager;
         private ICoursesService _coursesService;
+
         private LoginForm _loginForm;
 
 
-        public StudentForm(IUsersService usersServcie, ICoursesService coursesService, LoginForm loginForm)
+        public StudentForm(IServiceLocator serviceLocator, LoginForm loginForm)
         {
             InitializeComponent();
-            _usersServcie = usersServcie;
-            _coursesService = coursesService;
+            _usersService = serviceLocator.GetUsersService();
+            _coursesService = serviceLocator.GetCoursesService();
+            _authManager = serviceLocator.GetAuthenticationManager();
+            _serviceLocator = serviceLocator;
             _loginForm = loginForm;
         
             refreshForm();
@@ -32,8 +37,10 @@ namespace SW_attendance_Project.Views
      
         private void refreshForm()
         {
+            _usersService = _serviceLocator.GetUsersService();
+            _coursesService = _serviceLocator.GetCoursesService();
             lstCourses.Items.Clear();
-            var student = (Student)(_usersServcie.GetUserById(_usersServcie.GetLoggedInUser().Id));
+            var student = (Student)(_usersService.GetUserById(_authManager.GetLoggedInUser().Id));
             foreach (var course in _coursesService.GetCoursesForStudent(student.Id))
             {
                 var item = new ListViewItem(new string[] {
@@ -67,9 +74,9 @@ namespace SW_attendance_Project.Views
 
         private void lstCourses_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            _usersService = _serviceLocator.GetUsersService();
             lstApsent.Items.Clear();
-            var student = (Student)_usersServcie.GetLoggedInUser();
+            var student = (Student)(_usersService.GetUserById(_authManager.GetLoggedInUser().Id));
             if(lstCourses.SelectedItems.Count != 1) return ;
 
             var selectedCourse = (Course) lstCourses.SelectedItems[0].Tag;
@@ -88,13 +95,13 @@ namespace SW_attendance_Project.Views
 
         private void logout()
         {
-            _usersServcie.Logout();
+            _authManager.Logout();
             _loginForm.Show();
             this.Hide();
         }
         private void btnCheckin_Click(object sender, EventArgs e)
         {
-            var student = (Student)_usersServcie.GetLoggedInUser();
+            var student = (Student)_authManager.GetLoggedInUser();
             var activeLecture = (Lecture)_coursesService.GetActiveLectureForStudent(student.Id);
             if (activeLecture != null)
             {

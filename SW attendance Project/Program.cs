@@ -19,11 +19,11 @@ namespace SW_attendance_Project
         static void Main()
         {
 
-            IUsersService usersService = UsersService.GetInstance(); 
+            IServiceLocator serviceLocator = new ServiceLocator();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm(usersService, new CoursesService()));
+            Application.Run(new LoginForm(serviceLocator));
             
         }
     }

@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace SW_attendance_Project.Core
 {
-    public interface IUsersService
+    public interface IAuthenticationManager
     {
-        User GetUser(string username, string password);
+        User Login(string username, string password);
 
-        User GetUserById(int id);
+        User GetLoggedInUser();
+
+        bool IsAuthenticated();
+
+        void Logout();
     }
 }
