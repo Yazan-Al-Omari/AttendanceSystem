@@ -32,7 +32,7 @@ namespace SW_attendance_Project.Services
 
         public User Login(string username, string password)
         {
-            Logout(); // Logout Firstly
+            Logout();
             _user = _usersService.GetUser(username, password);
             return _user;
         }
@@ -50,7 +50,6 @@ namespace SW_attendance_Project.Services
 
         public void Logout()
         {
-            //We need to Implemnt this correclty 
             _user = null;
         }
     }
