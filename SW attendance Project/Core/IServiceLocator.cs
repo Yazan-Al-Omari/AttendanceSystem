@@ -13,6 +13,9 @@ namespace SW_attendance_Project.Core
         IUsersService GetUsersService();
 
         IAuthenticationManager GetAuthenticationManager();
+
+        IAttendanceNotifier GetAttendanceNotifier();
+        IAttendanceChecker GetAttendanceChecker();
         
     }
 }

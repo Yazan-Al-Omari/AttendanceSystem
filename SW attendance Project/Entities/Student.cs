@@ -13,6 +13,7 @@ namespace SW_attendance_Project.Entities
         {
             Attendances = new HashSet<Attendance>();
             Courses = new HashSet<Course>();
+            AbsentNotifications = new HashSet<AbsentNotification>();
         }
 
 
@@ -23,6 +24,8 @@ namespace SW_attendance_Project.Entities
         public virtual ICollection<Attendance> Attendances { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
+
+        public virtual ICollection<AbsentNotification> AbsentNotifications { get; set; }
 
         public IQueryable<Lecture> GetApsentForCourse(int courseId)
         {

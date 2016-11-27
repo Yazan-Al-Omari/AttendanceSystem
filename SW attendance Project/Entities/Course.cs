@@ -13,6 +13,7 @@ namespace SW_attendance_Project.Entities
         {
             Lectures = new HashSet<Lecture>();
             Students = new HashSet<Student>();
+            AbsentNotifications = new HashSet<AbsentNotification>();
         }
 
         [Key]
@@ -44,6 +45,8 @@ namespace SW_attendance_Project.Entities
         public virtual ICollection<Lecture> Lectures { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
+
+        public virtual ICollection<AbsentNotification> AbsentNotifications { get; set; }
 
        
     }

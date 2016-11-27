@@ -1,4 +1,5 @@
 ﻿using SW_attendance_Project.Core;
+using SW_attendance_Project.Infrastructer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,17 @@ namespace SW_attendance_Project.Services
         public IAuthenticationManager GetAuthenticationManager()
         {
             return AuthenticationManager.GetInstance(GetUsersService());
+        }
+
+
+        public IAttendanceNotifier GetAttendanceNotifier()
+        {
+            return new AttendanceNotifier(_factory, new EmailClient());
+        }
+
+        public IAttendanceChecker GetAttendanceChecker()
+        {
+            return new AttendanceChecker(_factory);
         }
     }
 }

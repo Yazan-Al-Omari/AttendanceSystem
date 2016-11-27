@@ -68,17 +68,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IAttendanceNotifier.cs" />
     <Compile Include="Core\IAuthenticationManager.cs" />
     <Compile Include="Core\ICoursesService.cs" />
+    <Compile Include="Core\IEmailClient.cs" />
     <Compile Include="Core\IServiceLocator.cs" />
     <Compile Include="Core\IUsersService.cs" />
     <Compile Include="Entities\Attendance.cs" />
+    <Compile Include="Entities\AbsentNotification.cs" />
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Instructor.cs" />
     <Compile Include="Entities\Lecture.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\SystemContext.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Infrastructer\EmailClient.cs" />
     <Compile Include="Migrations\201611061530273_Init.cs" />
     <Compile Include="Migrations\201611061530273_Init.Designer.cs">
       <DependentUpon>201611061530273_Init.cs</DependentUpon>
@@ -99,11 +103,17 @@
     <Compile Include="Migrations\201611062149575_FixTimeAttendance.Designer.cs">
       <DependentUpon>201611062149575_FixTimeAttendance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611271715165_Absents.cs" />
+    <Compile Include="Migrations\201611271715165_Absents.Designer.cs">
+      <DependentUpon>201611271715165_Absents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AttendanceNotifier.cs" />
     <Compile Include="Services\AuthenticationManager.cs" />
     <Compile Include="Services\CoursesService.cs" />
+    <Compile Include="Services\AttendanceChecker.cs" />
     <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="Services\SystemContextFactory.cs" />
     <Compile Include="Services\UsersService.cs" />
@@ -145,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611062149575_FixTimeAttendance.resx">
       <DependentUpon>201611062149575_FixTimeAttendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611271715165_Absents.resx">
+      <DependentUpon>201611271715165_Absents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

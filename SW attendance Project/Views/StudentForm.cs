@@ -97,7 +97,7 @@ namespace SW_attendance_Project.Views
         {
             _authManager.Logout();
             _loginForm.Show();
-            this.Close();
+            this.Hide();
         }
         private void btnCheckin_Click(object sender, EventArgs e)
         {
